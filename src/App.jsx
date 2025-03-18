@@ -20,6 +20,21 @@ function App(props){
     setTasks(updatedTasks);
   }
   
+  function deleteTask(id){
+    const filteredTasks = tasks.filter((task) => id !== task.id)
+    setTasks(filteredTasks)
+  }
+
+  function editTask(id,newName){
+    const editedTaskList = tasks.map((task)=>{
+      if(id === task.id){
+        return {...task,name:newName}
+      }
+      return task
+    })
+    setTasks(editedTaskList)
+  }
+
   const [tasks, setTasks] = useState(props.tasks)
   const taskList = tasks?.map((task)=><Todo 
   name = {task.name} 
@@ -27,6 +42,8 @@ function App(props){
   completed = {task.completed}
   key = {task.id}
   toggleTaskCompleted = {toggleTaskCompleted}
+  deleteTask = {deleteTask}
+  editTask = {editTask}
   />)
   const taskNoun = taskList.length !==1 ? "tasks" : "task"
   const headingText = `${taskList.length} ${taskNoun} remaining`
